@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="         MY IMPLEMENTATION">
+    <Position X="8.288" Y="0.5" Height="0.632" Width="1.242" />
+  </Comment>
+  <Comment CommentText="helper classes">
+    <Position X="14.166" Y="2.01" Height="0.374" Width="0.854" />
+  </Comment>
+  <Comment CommentText="classes used in different buildings (and enumerations)">
+    <Position X="13.801" Y="4.538" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Builder.Builders.BasicHouseBuilder" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Builders\BasicHouseBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Builders.SkyScraperBuilder" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Builders\SkyScraperBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Builders.WareHouseBuilder" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Builders\WareHouseBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.BuildingBuilder" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <AssociationLine Name="builds" Type="Builder.SkyScraper">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.772" Y="0.436" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EAAAIBAAAAAACAAAAAAAAAAAAAAAABAAAIAAAAAAAAA=</HashCode>
+      <FileName>Builders\BuildingBuilder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="builds" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Builder.BasicHouse" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\BasicHouse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Building" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAkACAAIAAgAAAAAAAAUAAACBAAAAAA=</HashCode>
+      <FileName>Buildings\Building.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Foundation" Collapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAQAAAAEAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\BuildingBlocks\Foundation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Roof" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\BuildingBlocks\Roof.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.SkyScraper" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\SkyScraper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Warehouse" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\Warehouse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Message" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABCAAAAAgACAAAAAAAEAAAAAAEAAACACAAAAA=</HashCode>
+      <FileName>Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder.Program" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="initiates" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Builder.Constructors.JuniorConstructor" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <AssociationLine Name="initiates" Type="Builder.BuildingBuilder">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="2.661" Y="0.107" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAIAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constructors\JuniorConstructor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="initiates" />
+    </ShowAsAssociation>
+  </Class>
+  <Struct Name="Builder.TwoDimentionalProportions" Collapsed="true">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TwoDimentionalProportions.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Builder.Buildings.BuildingBlocks.FoundationType" Collapsed="true">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAEAAAA=</HashCode>
+      <FileName>Buildings\BuildingBlocks\FoundationTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Builder.Buildings.BuildingBlocks.RoofType" Collapsed="true">
+    <Position X="12" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAABAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\BuildingBlocks\RoofTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
