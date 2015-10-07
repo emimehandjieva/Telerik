@@ -4,11 +4,27 @@
 
 #### Most used are the logical data models for databases:
 
-+ Hierarchical database model
++ Hierarchical database model -
+The hierarchical model is a restricted type of network model. Data is represented as
+collections of records and relationships are represented by sets. However, the hierarchical
+model allows a node to have only one parent. A hierarchical model can be represented
+as a tree graph, with records appearing as nodes (also called segments) and sets as edges.
 + Network model
-+ Relational model
+In the network model, data is represented as collections of records, and relationships
+are represented by sets. Compared with the relational model, relationships are explicitly
+modeled by the sets, which become pointers in the implementation. The records are
+organized as generalized graph structures with records appearing as nodes (also called
+segments) and sets as edges in the graph.
++ Relational model 
+The relational model's central idea is to describe a database as a collection of predicates over a finite set of predicate variables, describing constraints on the possible values and combinations of values. The content of the database at any given time is a finite (logical) model of the database, i.e. a set of relations, one per predicate variable, such that all predicates are satisfied. A request for information from the database (a database query) is also a predicate
 + Entity–relationship model
+An entity may be defined as a thing capable of an independent existence that can be uniquely identified. An entity is an abstraction from the complexities of a domain. When we speak of an entity, we normally speak of some aspect of the real world that can be distinguished from other aspects of the real world. Paul Beynon-Davies (2004. Database Systems. Houndmills, Basingstoke, UK: Palgrave. An entity is a thing that exists either physically or logically.) An entity may be a physical object such as a house or a car (they exist physically), an event such as a house sale or a car service, or a concept such as a customer transaction or order (they exist logically—as a concept). Although the term entity is the one most commonly used, following Chen we should really distinguish between an entity and an entity-type. An entity-type is a category. An entity, strictly speaking, is an instance of a given entity-type. There are usually many instances of an entity-type. Because the term entity-type is somewhat cumbersome, most people tend to use the term entity as a synonym for this term.
+
+Entities can be thought of as nouns. Examples: a computer, an employee, a song, a mathematical theorem.
+
+A relationship captures how entities are related to one another. Relationships can be thought of as verbs, linking two or more nouns. Examples: an owns relationship between a company and a computer, a supervises relationship between an employee and a department, a performs relationship between an artist and a song, a proved relationship between a mathematician and a theorem.
 + Enhanced entity–relationship model
+
 + Object model
 + Document model
 + Entity–attribute–value model
