@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="students.xsl"?>
+<class>
+	<student>
+		<name>Ivan Petrov</name>
+		<sex>Female</sex>
+		<birthdate>13.12.1990</birthdate>
+		<phone>08089263</phone>
+		<email>ivan.petrov@abv.bg</email>
+		<course>KPK</course>
+		<specialty>C# Programmer</specialty>
+		<facultyNumber>29890023</facultyNumber>
+		<exams>
+			<exam>
+				<name>KPK Test1</name>
+				<tutor>Evglogi</tutor>
+				<score>50%</score>
+			</exam>
+			<exam>
+				<name>KPK Test2</name>
+				<tutor>Evglogi</tutor>
+				<score>60%</score>
+			</exam>
+			<exam>
+				<name>KPK Exam</name>
+				<tutor>Evglogi</tutor>
+				<score>0%</score>
+			</exam>
+		</exams>
+	</student>
+	<student>
+		<name>Petrana Georgieva</name>
+		<sex>Male</sex>
+		<birthdate>01.01.1991</birthdate>
+		<phone>0283182736</phone>
+		<email>p.g.@hotmail.com</email>
+		<course>Databases</course>
+		<specialty>None</specialty>
+		<facultyNumber>23423423</facultyNumber>
+		<exams>
+			<exam>
+				<name>C# 1</name>
+				<tutor>Ivailo</tutor>
+				<score>79%</score>
+			</exam>
+			<exam>
+				<name>C# 2</name>
+				<tutor>Ivailo</tutor>
+				<score>49%</score>
+			</exam>
+			<exam>
+				<name>C# OOP</name>
+				<tutor>Ivailo</tutor>
+				<score>39%</score>
+			</exam>
+			<exam>
+				<name>C# KPK</name>
+				<tutor>Ivailo</tutor>
+				<score>60%</score>
+			</exam>
+			<exam>
+				<name>Databases</name>
+				<tutor>Ivailo</tutor>
+				<score>0%</score>
+			</exam>
+		</exams>
+	</student>
+	<student>
+		<name>Kaloian Georgiev</name>
+		<sex>Male</sex>
+		<birthdate>03.03.1993</birthdate>
+		<phone>23424</phone>
+		<email>sdfsd@gmail.com</email>
+		<course>None</course>
+		<specialty>None</specialty>
+		<facultyNumber>234234234</facultyNumber>
+		<exams>
+		</exams>
+	</student>
+</class>

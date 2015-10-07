@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns:students="urn:students"
+		xmlns:student="urn:student"
+		xmlns:exam="urn:exam"
+		>
+	<student:student>
+		<student:name>Ivan Petrov</student:name>
+		<student:sex>Female</student:sex>
+		<student:birthdate>13.12.1990</student:birthdate>
+		<student:phone>08089263</student:phone>
+		<student:email>ivan.petrov@abv.bg</student:email>
+		<student:course>KPK</student:course>
+		<student:specialty>C# Programmer</student:specialty>
+		<student:facultynumber>29890023</student:facultynumber>
+		<student:exams>
+			<exam:exam>
+				<exam:name>KPK Test1</exam:name>
+				<exam:tutor>Evglogi</exam:tutor>
+				<exam:score>50%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>KPK Test2</exam:name>
+				<exam:tutor>Evglogi</exam:tutor>
+				<exam:score>60%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>KPK Exam</exam:name>
+				<exam:tutor>Evglogi</exam:tutor>
+				<exam:score>0%</exam:score>
+			</exam:exam>
+		</student:exams>
+	</student:student>
+	<student:student>
+		<student:name>Petrana Georgieva</student:name>
+		<student:sex>Male</student:sex>
+		<student:birthdate>01.01.1991</student:birthdate>
+		<student:phone>0283182736</student:phone>
+		<student:email>p.g.@hotmail.com</student:email>student:student:
+		<student:course>Databases</student:course>
+		<student:specialty>None</student:specialty>
+		<student:facultynumber>23423423</student:facultynumber>
+		<student:exams>
+			<exam:exam>
+				<exam:name>C# 1</exam:name>
+				<exam:tutor>Ivailo</exam:tutor>
+				<exam:score>79%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>C# 2</exam:name>
+				<exam:tutor>Ivailo</exam:tutor>
+				<exam:score>49%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>C# OOP</exam:name>
+				<exam:tutor>Ivailo</exam:tutor>
+				<exam:score>39%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>C# KPK</exam:name>
+				<exam:tutor>Ivailo</exam:tutor>
+				<exam:score>60%</exam:score>
+			</exam:exam>
+			<exam:exam>
+				<exam:name>Databases</exam:name>
+				<exam:tutor>Ivailo</exam:tutor>
+				<exam:score>0%</exam:score>
+			</exam:exam>
+		</student:exams>
+	</student:student>
+	<student:student>
+		<student:name>Kaloian Georgiev</student:name>
+		<student:sex>Male</student:sex>
+		<student:birthdate>03.03.1993</student:birthdate>
+		<student:phone>23424</student:phone>
+		<student:email>sdfsd@gmail.com</student:email>
+		<student:course>None</student:course>
+		<student:specialty>None</student:specialty>
+		<student:facultynumber>234234234</student:facultynumber>
+		<student:exams>
+		</student:exams>
+	</student:student>
+</class>
