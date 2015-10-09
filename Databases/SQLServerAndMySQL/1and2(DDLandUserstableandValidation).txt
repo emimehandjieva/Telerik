@@ -1,0 +1,181 @@
+create database RecipeWebSite
+go
+CREATE TABLE Recipes
+(
+	recipe_id int primary key,
+	recipe_name char(30) not null ,
+	time_to_cook int ,
+	calories int ,
+	recipe_image int ,
+	recipe_info nvarchar(max), 
+	category_id int ,
+	submitter int ,
+	submittercomment nvarchar(max),
+	modif_date datetime ,
+	difficulty int
+)
+go
+create table Categories 
+(
+	category_id int primary key not null,
+	category_name char(50) not null,
+	cathergory_desc nvarchar(max) not null,
+	modif_date datetime
+)
+go
+create table Ingredients 
+(
+	ingredient_id int primary key,
+	ingredient_name char(40) not null ,
+	ingredient_image image, 
+	modif_date datetime
+)
+go
+Create table Steps 
+(
+	step_id int primary key,
+	step_description nvarchar(max) not null,
+	modif_date datetime
+)
+
+Create table Users 
+(
+	user_id int primary key,
+	user_email nvarchar(50) not null,
+	user_password nvarchar(20) not null,
+	user_desc nvarchar(max) ,
+	profile_picture int, 
+	modif_date datetime,
+	role nvarchar(50) not null		
+)
+go
+
+Create table Recipe_Ingredient 
+(
+	ingredient_id int not null,
+	recipe_id int not null,
+	ingredient_quantity numeric not null,
+	modif_date datetime
+)
+go
+
+Create table Recipe_Steps 
+(
+	step_id int not null,
+	recipe_id int  not null,
+	step_number integer not null,
+	modif_date datetime
+)
+go
+create table Favourites 
+( 
+	recipe_id int not null,
+	user_id int not null,
+	modif_date datetime
+)
+go
+
+Create table Reviews 
+(
+	review_text nvarchar(max) not null,
+	recipe_id int not null, 
+	user_id int not null,
+	review_number int not null,
+	dateandtime datetime not null,
+	modif_date datetime
+)
+go
+
+alter table Recipe_Ingredient
+add constraint recipe_ingredient_pk primary key (ingredient_id,recipe_id)
+go
+
+alter table Recipe_Steps
+add constraint recipe_steps_pk primary key (step_id,recipe_id)
+go
+
+alter table Favourites
+add constraint favourites_pk primary key (user_id,recipe_id)
+go
+
+alter table Reviews
+add constraint reviews_pk primary key (user_id,recipe_id,review_number)
+go
+
+
+alter table Recipe_Ingredient
+add constraint ingredient_fk foreign key (ingredient_id)
+references Ingredients(ingredient_id)
+on update cascade;
+go
+
+alter table Recipe_Ingredient
+add constraint recipe_ingredient_fk foreign key (recipe_id)
+references Recipes(recipe_id)
+on update cascade;
+go
+
+alter table Recipe_Steps
+add constraint recipe_steps_fk foreign key (recipe_id)
+references Recipes(recipe_id)
+on update cascade;
+go
+
+alter table Recipe_Steps
+add constraint recipe_steps_steps_fk foreign key (step_id)
+references Steps(step_id)
+on update cascade;
+go
+
+alter table Favourites
+add constraint favourites_recipe_fk foreign key (recipe_id)
+references Recipes(recipe_id)
+on update cascade;
+go
+
+alter table Favourites
+add constraint favourites_user_fk foreign key (user_id)
+references Users(user_id)
+on update cascade;
+go
+
+
+
+alter table Reviews
+add constraint Reviews_recipe_fk foreign key (recipe_id)
+references Recipes(recipe_id)
+on update cascade;
+go
+
+alter table Reviews
+add constraint Reviews_user_fk foreign key (user_id)
+references Users(user_id)
+on update cascade;
+go
+
+alter table Recipes 
+add constraint recipe_category_FK foreign key (category_id)
+references Categories(category_id)
+on update cascade;
+go
+
+alter table Recipes 
+add constraint submitter_FK foreign key (submitter)
+references Users(user_id) 
+go
+
+Create function dbo.CheckUsers  (@id  int,@mail nvarchar(50),@pass nvarchar(20))
+returns varchar(5)
+as 
+begin 
+	declare @result varchar(5)
+	if exists (select * from Users
+			where user_id=@id and user_email=@mail and user_password=@pass) 
+		set @result='yes'
+	else 
+		set @result='no' 
+	return @result 
+end 
+go
+
+print dbo.CheckUsers ('1','ivan_1@abv.bg','12345')

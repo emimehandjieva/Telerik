@@ -1,0 +1,124 @@
+create view RecipeDetails 
+as 
+select r.recipe_name,r.recipe_info,r.time_to_cook,r.calories,i.ingredient_name,ri.ingredient_quantity
+from Recipes r inner join Recipe_Ingredient ri on r.recipe_id=ri.recipe_id inner join Ingredients i on ri.ingredient_id=i.ingredient_id
+go
+
+create view RecipeInfo
+as
+select r.recipe_name,r.recipe_info,c.category_name,r.time_to_cook
+from Recipes r inner join Categories c on r.category_id=c.category_id
+GO
+
+create view RecipeStep
+as 
+select r.recipe_name,s.step_description,s.step_id,rs.step_number
+from Recipes r inner join Recipe_Steps rs on r.recipe_id=rs.step_id inner join Steps s on rs.step_id=s.step_id
+go
+
+create view RecipeUser
+as 
+select u.user_id,u.user_email,r.recipe_id,r.recipe_info,r.submittercomment,r.recipe_name
+from Users u inner join Recipes r on r.submitter=u.user_id
+go
+
+Create procedure RecipeDetailSearchByRecipe
+@recipe_name char(30)=null,
+@max_ttc int=null,
+@max_calories int=null
+as 
+begin 
+	declare @String varchar(max)
+	set @String=
+	'Select * 
+	From RecipeDetails
+	where 1=1 '
+	if @recipe_name is not null 
+		set @String=@String+'and recipe_name like ''%'+@recipe_name+'%'' '
+	if @max_ttc is not null
+		set @String=@String+'and time_to_cook <'+cast(@max_ttc as varchar(5))
+	if @max_calories is not null 
+		set @String=@String+' and calories < '+cast(@max_calories as varchar(5))
+	exec (@String)
+end
+go
+
+
+
+create procedure SearchByStep 
+@step_id int=null,
+@step_number int=null,
+@step_desc nvarchar(max)=null
+as 
+begin 
+	declare @SQL_String varchar(max)
+	set @SQL_String=
+	'Select * from RecipeStep 
+	where 1=1 ' 
+	if @step_id is not null 
+		set @SQL_String=@SQL_String+'and step_id='+cast(@step_id as varchar)+' '
+	if @step_number is not null 
+		set @SQL_String=@SQL_String+'and step_number='+CAST(@step_number as varchar)+' '
+	if @step_desc is not null
+		set @SQL_String=@SQL_String+'and step_description like''%'+@step_desc+'%'' '
+	set @SQL_String=@SQL_String+'
+	group by recipe_name,step_description,step_number,step_id;'
+	exec (@SQL_String)
+end
+go
+
+create procedure SearchByUser
+@user_id int=null,
+@user_email nvarchar(20)=null,
+@submittercomment nvarchar(max)=null
+as 
+begin 
+	declare @SQL nvarchar(max)
+	set @SQL= 
+	'Select * From RecipeUser 
+	where 1=1 '
+	if @user_id is not null 
+		set @SQL=@SQL+'and user_id ='+cast(@user_id as varchar)+' '
+	if @user_email is not null
+		set @SQL=@SQL+'and user_email like ''%'+@user_email+'%'' '
+	if @submittercomment is not null 
+		set @SQL=@SQL+'and submittercomment like ''%'+@submittercomment+'%'' '
+	set @SQL=@SQL+'
+	order by recipe_name,recipe_id,recipe_info;'
+	print @SQL
+	exec (@SQL)
+end
+go
+
+exec RecipeDetailSearchByRecipe @max_ttc='80'
+go
+
+exec RecipeDetailSearchByRecipe @max_calories='80'
+go
+
+exec RecipeDetailSearchByRecipe @recipe_name='Пиле'
+go
+
+exec SearchByStep @step_id='3'
+go
+
+exec SearchByStep @step_number='1'
+go
+
+exec SearchByStep @step_desc='Нарежете'
+go
+
+exec SearchByUser @user_id='2'
+go
+
+exec SearchByUser @user_email='tanq'
+go
+
+exec SearchByUser @user_email='maria@abv.bg'
+go
+
+exec SearchByUser @submittercomment='Деца'
+go
+
+exec SearchByUser @submittercomment='Наздраве'
+go

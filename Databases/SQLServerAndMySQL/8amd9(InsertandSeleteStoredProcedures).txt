@@ -1,0 +1,182 @@
+create procedure insert_steps
+@step_number int=null,
+@recipe_id int=null,
+@step_desc nvarchar(max)=null
+
+as 
+begin 
+	declare @mess nvarchar(40)
+	begin try 
+		insert into Steps(step_number,recipe_id,step_description)
+		values (@step_number,@recipe_id,@step_desc)
+	end try
+	begin catch 
+		set @mess=N'Не е възможно да се осъществи запис!'
+		Raiserror(@mess,16,1)
+		return 
+	end catch
+end
+go
+
+create procedure delete_steps
+@step_number int=null,
+@recipe_id int = null
+as 
+begin 
+	declare @mess nvarchar(50),
+			@rows int
+	select @rows = COUNT (*) from Steps
+	where step_number=@step_number and recipe_id=@recipe_id
+	if @rows=0
+		Begin 
+			Set @mess=N'Няма такава стъпка!'
+			raiserror (@mess,16,1)
+			return 
+		end
+	begin try 
+		delete from Steps
+		step_number=@step_number and recipe_id=@recipe_id
+	end try 
+	begin catch 
+		set @mess=N'Не може да се изтрие тази стъпка!'
+		raiserror (@mess,16,1)
+		return 
+	end catch 
+end
+go
+
+create procedure insert_category 
+@cat_id int=null,
+@cat_name char(50)=null,
+@cat_desc nvarchar(max)=null
+as 
+begin 
+	declare @message nvarchar(40)
+	begin try 
+		insert into Categories(category_id,category_name,cathergory_desc)
+		values(@cat_id,@cat_name,@cat_desc)
+	end try
+	begin catch 
+		set @message=N'Не може да бъде добавен записът в "Категории"!'
+		raiserror (@message,16,1)
+		return 
+	end catch
+end
+go
+
+create procedure delete_categories
+@cat_id int=null
+as 
+begin 
+	declare @mess nvarchar(50),
+			@rows int
+	select @rows = COUNT (*) from Categories
+	where category_id=@cat_id
+	if @rows=0
+		Begin 
+			Set @mess=N'Няма такава категория!'
+			raiserror (@mess,16,1)
+			return 
+		end
+	begin try 
+		delete from Categories
+		where category_id=@cat_id
+	end try 
+	begin catch 
+		set @mess=N'Категорията не може да бъде изтрита!'
+		raiserror (@mess,16,1)
+		return 
+	end catch 
+end
+go
+
+
+
+create procedure insert_ingr
+@ingr_id int=null,
+@ingr_name char(40)=null
+as 
+begin 
+	declare @msg nvarchar(60)
+	begin try
+		insert into Ingredients (ingredient_id,ingredient_name)
+		values (@ingr_id,@ingr_name)
+	end try
+	begin catch 
+		set @msg=N'Не може да бъде добавена съставката!'
+		raiserror(@msg,16,1)
+		return
+	end catch
+end
+go
+
+create procedure delete_ingr
+@ingr_id int=null
+as 
+begin 
+	declare @mess nvarchar(50),
+			@rows int
+	select @rows = COUNT (*) from Ingredients
+	where ingredient_id=@ingr_id
+	if @rows=0
+		Begin 
+			Set @mess=N'Няма такава съставка!'
+			raiserror (@mess,16,1)
+			return 
+		end
+	begin try 
+		delete from Ingredients
+		where ingredient_id=@ingr_id
+	end try 
+	begin catch 
+		set @mess=N'Съставката не може да бъде изтрита!'
+		raiserror (@mess,16,1)
+		return 
+	end catch 
+end
+go
+
+create procedure delete_users
+@user_id int=null
+as 
+begin 
+declare @mess nvarchar(50),
+			@rows int
+	select @rows = COUNT (*) from Users
+	where user_id=@user_id
+	if @rows=0
+		Begin 
+			Set @mess=N'Няма такава съставка!'
+			raiserror (@mess,16,1)
+			return 
+		end
+	begin try 
+		delete from Users
+		where user_id=@user_id
+	end try 
+	begin catch 
+		set @mess=N'Съставката не може да бъде изтрита!'
+		raiserror (@mess,16,1)
+		return 
+	end catch 
+end
+go
+
+
+create procedure insert_users 
+@user_id int=null,
+@user_email nvarchar(50)=null,
+@user_pass nvarchar(20)=null
+as 
+begin 
+	declare @msg nvarchar(60)
+	begin try
+		insert into Users (user_id,user_email,user_password)
+		values (@user_id,@user_email,@user_pass)
+	end try
+	begin catch 
+		set @msg='Добавянето на потребител не е възможно!'
+		raiserror(@msg,16,1)
+	end catch
+end
+go

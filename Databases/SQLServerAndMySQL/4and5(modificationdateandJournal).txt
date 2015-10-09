@@ -1,0 +1,308 @@
+create trigger Recipe_update
+on Recipes 
+after insert,update 
+as 
+begin 
+	disable trigger Recipes_change on Recipes;
+	set nocount on 
+	update Recipes
+	set modif_date=GETDATE()
+	where recipe_id in (select recipe_id from inserted);
+	enable trigger dbo.Recipes_change on Recipes;
+end
+go	
+
+
+create trigger Categories_update
+on Categories 
+after insert,update 
+as 
+begin 
+	set nocount on ;
+	disable trigger Categories_change on Categories;
+	update Categories 
+	set modif_date=GETDATE()
+	where category_id in (select category_id from inserted);
+	enable trigger dbo.Categories_change on Categories; 
+end
+go
+
+create trigger Favourites_update
+on Favourites 
+after insert,update 
+as 
+begin 
+	set nocount on 
+	update Favourites 
+	set modif_date=GETDATE()
+	where recipe_id in (select recipe_id from inserted) and user_id in (select user_id from inserted)
+end
+go
+
+create trigger Reviews_update
+on Reviews 
+after insert,update 
+as 
+begin 
+	set nocount on 
+	update Reviews 
+	set modif_date=GETDATE()
+	where recipe_id in (select recipe_id from inserted) and user_id in (select user_id from inserted)
+end
+go
+
+	
+create trigger Ingredients_update
+on Ingredients
+after insert,update 
+as 
+begin 
+	set nocount on ;
+	disable trigger Ingredients_change on Ingredients;
+	update Ingredients
+	set modif_date=GETDATE()
+	where ingredient_id in (select ingredient_id from inserted) ;
+	enable trigger dbo.Ingredients_change on Ingredients
+end
+go
+	
+create trigger Recipe_Ingredient_update
+on Recipe_Ingredient
+after insert,update 
+as 
+begin 
+	set nocount on 
+	update Recipe_Ingredient
+	set modif_date=GETDATE()
+	where ingredient_id in (select ingredient_id from inserted) and recipe_id in (select recipe_id from inserted)
+end
+go
+
+
+create trigger Users_update
+on Users
+after insert,update 
+as 
+begin 
+	set nocount on ;
+	disable trigger Users_change on Users;
+	update Users 
+	set modif_date=GETDATE()
+	where user_id in (select user_id from inserted);
+	enable trigger dbo.Users_change on Users
+end
+go
+
+create trigger Steps_update
+on Steps
+after insert,update 
+as 
+begin 
+	set nocount on ;
+	disable trigger Steps_change on Steps;
+	update Steps
+	set modif_date=GETDATE()
+	where step_number in (select step_number from inserted) and recipe_id in (select recipe_id from inserted);
+	enable trigger dbo.Steps_change on Steps;
+end
+go
+
+
+	
+create table Journal 
+(
+	Date datetime,
+	Operation varchar(6),
+	Table_name varchar(20),
+	Old_Values varchar(max),
+	New_values varchar(max)
+)
+go	
+
+create trigger Categories_change 
+on Categories 
+after insert,update,delete
+as 
+ begin 
+	set nocount on 
+	declare @operation varchar(6)
+	set @operation = case 
+		when exists (select* from inserted) and exists (select* from deleted) 
+			then 'Update'
+		when exists(select * from inserted)
+			then 'Insert' 
+		when exists (select* from deleted)
+			then 'Delete' 
+		else null 
+		end 
+	if @operation='Delete'
+	insert into Journal (Date,Operation,Table_name,Old_values)
+		select Getdate(),@operation,'Categories', 
+			  cast(d.category_id as varchar(10))+';'+ISNULL(d.category_name,' ')+';'+ISNULL(d.cathergory_desc,' ') as old_values
+		from deleted d
+	if @operation='Insert'
+		insert into journal (Date,Operation,Table_name,New_values)
+		select Getdate(),@operation,'Categories',
+		cast(i.category_id as varchar(10))+';'+ISNULL(i.category_name,' ')+';'+ISNULL(i.cathergory_desc,' ') as new_values
+		from inserted i
+	 if @operation ='Update'
+	 insert into journal (Date,Operation,Table_name,New_values,Old_Values)
+		select Getdate(),@operation,'Categories',
+			  cast(d.category_id as varchar(10))+';'+ISNULL(i.category_name,' ')+';'+ISNULL(i.cathergory_desc,' ') as new_values,
+			  cast(d.category_id as varchar(10))+';'+ISNULL(d.category_name,' ')+';'+ISNULL(d.cathergory_desc,' ') as old_values
+		from inserted i,deleted d
+		where d.category_id=i.category_id
+	end
+go
+
+
+create trigger Ingredients_change 
+on Ingredients
+after insert,update,delete
+as 
+ begin 
+	set nocount on 
+	declare @operation varchar(6)
+	set @operation = case 
+		when exists (select* from inserted) and exists (select* from deleted) 
+			then 'Update'
+		when exists(select * from inserted)
+			then 'Insert' 
+		when exists (select* from deleted)
+			then 'Delete' 
+		else null 
+		end 
+	if @operation='Delete'
+	insert into Journal (Date,Operation,Table_name,Old_values)
+		select Getdate(),@operation,'Ingredients', 
+			  cast(d.ingredient_id as varchar(10))+';'+ISNULL(d.ingredient_name,' ') as old_values
+		from deleted d
+	if @operation='Insert'
+		insert into journal (Date,Operation,Table_name,New_values)
+		select Getdate(),@operation,'Ingredients',
+			  cast(i.ingredient_id as varchar(10))+';'+ISNULL(i.ingredient_name,' ') as new_values
+		from inserted i
+	 if @operation ='Update'
+	 insert into journal (Date,Operation,Table_name,New_values,Old_Values)
+		select Getdate(),@operation,'Ingredients',
+			  cast(d.ingredient_id as varchar(10))+';'+ISNULL(i.ingredient_name,' ') as new_values,
+			  cast(i.ingredient_id as varchar(10))+';'+ISNULL(d.ingredient_name,' ') as old_values
+		from inserted i,deleted d
+		where d.ingredient_id=i.ingredient_id
+	end
+go
+
+USE [RecipeWebSite]
+GO
+/****** Object:  Trigger [dbo].[Recipes_change]    Script Date: 05/25/2015 11:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER trigger [dbo].[Recipes_change] 
+on [dbo].[Recipes]
+after insert,update,delete
+as 
+ begin 
+	set nocount on 
+	declare @operation varchar(6)
+	set @operation = case 
+		when exists (select* from inserted) and exists (select* from deleted) 
+			then 'Update'
+		when exists(select * from inserted)
+			then 'Insert' 
+		when exists (select* from deleted)
+			then 'Delete' 
+		else null 
+		end 
+	if @operation='Delete'
+	insert into Journal (Date,Operation,Table_name,Old_values)
+		select Getdate(),@operation,'Recipes', 
+			cast(d.recipe_id as varchar(10))+';'+cast(d.recipe_name as varchar(60))+';'+cast(d.time_to_cook as varchar(5))+';'+cast(d.calories as varchar(5))+';'+cast(d.category_id as varchar(60))+';'+cast(d.submitter as varchar(60))+';'+cast(d.submittercomment as varchar(60))+';'+cast(d.difficulty as varchar(5))as old_values
+		from deleted d
+	if @operation='Insert'
+		insert into journal (Date,Operation,Table_name,New_values)
+		select Getdate(),@operation,'Recipes',
+			cast(i.recipe_id as varchar(10))+';'+cast(i.recipe_name as varchar(60))+';'+cast(i.time_to_cook as varchar(5))+';'+cast(i.calories as varchar(5))+';'+cast(i.category_id as varchar(60))+';'+cast(i.submitter as varchar(60))+';'+cast(i.submittercomment as varchar(60))+';'+cast(i.difficulty as varchar(5))as new_values
+		from inserted i
+	 if @operation ='Update'
+	 insert into journal (Date,Operation,Table_name,New_values,Old_Values)
+		select Getdate(),@operation,'Recipes',
+			  cast(i.recipe_id as varchar(10))+';'+cast(i.recipe_name as varchar(60))+';'+cast(i.time_to_cook as varchar(5))+';'+cast(i.calories as varchar(5))+';'+cast(i.category_id as varchar(60))+';'+cast(i.submitter as varchar(60))+';'+cast(i.submittercomment as varchar(60))+';'+cast(i.difficulty as varchar(5))as new_values,
+			  cast(d.recipe_id as varchar(10))+';'+cast(d.recipe_name as varchar(60))+';'+cast(d.time_to_cook as varchar(5))+';'+cast(d.calories as varchar(5))+';'+cast(d.category_id as varchar(60))+';'+cast(d.submitter as varchar(60))+';'+cast(d.submittercomment as varchar(60))+';'+cast(d.difficulty as varchar(5))as old_values
+		from inserted i,deleted d
+		where d.recipe_id=i.recipe_id
+	end
+
+
+create trigger Users_change 
+on Users
+after insert,update,delete
+as 
+ begin 
+	set nocount on 
+	declare @operation varchar(6)
+	set @operation = case 
+		when exists (select* from inserted) and exists (select* from deleted) 
+			then 'Update'
+		when exists(select * from inserted)
+			then 'Insert' 
+		when exists (select* from deleted)
+			then 'Delete' 
+		else null 
+		end 
+	if @operation='Delete'
+	insert into Journal (Date,Operation,Table_name,Old_values)
+		select Getdate(),@operation,'Users', 
+			  cast(d.user_id as varchar(10))+';'+ISNULL(d.user_email,' ')+';'+ISNULL(d.user_password,' ')+';'+ISNULL(d.user_desc,' ')+';'+cast(d.role as varchar(10))as old_values
+		from deleted d
+	if @operation='Insert'
+		insert into journal (Date,Operation,Table_name,New_values)
+		select Getdate(),@operation,'Users',
+			  cast(i.user_id as varchar(10))+';'+ISNULL(i.user_email,' ')+';'+ISNULL(i.user_password,' ')+';'+ISNULL(i.user_desc,' ')+';'+cast(i.role as varchar(10))as new_values
+		from inserted i
+	 if @operation ='Update'
+	 insert into journal (Date,Operation,Table_name,New_values,Old_Values)
+		select Getdate(),@operation,'Users',
+			  cast(i.user_id as varchar(10))+';'+ISNULL(i.user_email,' ')+';'+ISNULL(i.user_password,' ')+';'+ISNULL(i.user_desc,' ')+';'+cast(i.role as varchar(10))as new_values,
+			  cast(d.user_id as varchar(10))+';'+ISNULL(d.user_email,' ')+';'+ISNULL(d.user_password,' ')+';'+ISNULL(d.user_desc,' ')+';'+cast(d.role as varchar(10))as old_values
+		from inserted i,deleted d
+		where d.user_id=i.user_id
+	end
+
+
+create trigger Steps_change 
+on Steps
+after insert,update,delete
+as 
+ begin 
+	set nocount on 
+	declare @operation varchar(6)
+	set @operation = case 
+		when exists (select* from inserted) and exists (select* from deleted) 
+			then 'Update'
+		when exists(select * from inserted)
+			then 'Insert' 
+		when exists (select* from deleted)
+			then 'Delete' 
+		else null 
+		end 
+	if @operation='Delete'
+	insert into Journal (Date,Operation,Table_name,Old_values)
+		select Getdate(),@operation,'Steps', 
+			  cast(d.step_number as varchar(10))+cast(d.recipe_id as varchar(10))+';'+ISNULL(d.step_description,' ')as old_values
+		from deleted d
+	if @operation='Insert'
+		insert into journal (Date,Operation,Table_name,New_values)
+		select Getdate(),@operation,'Steps',
+			 cast(i.step_number as varchar(10))+cast(i.recipe_id as varchar(10))+';'+ISNULL(i.step_description,' ')as new_values
+		from inserted i
+	 if @operation ='Update'
+	 insert into journal (Date,Operation,Table_name,New_values,Old_Values)
+		select Getdate(),@operation,'Steps',
+			  cast(i.step_number as varchar(10))+cast(i.recipe_id as varchar(10))+';'+ISNULL(i.step_description,' ')as new_values,
+			  cast(d.step_number as varchar(10))+cast(d.recipe_id as varchar(10))+';'+ISNULL(d.step_description,' ')as old_values
+		from inserted i,deleted d
+		where d.step_id=i.step_id
+	end
+go

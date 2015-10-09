@@ -1,0 +1,19 @@
+create unique nonclustered index RecipeDataUniqueness
+on Recipes 
+(recipe_name asc)
+go
+
+create unique nonclustered index UserDataUniqueness
+on Users
+(user_email asc)
+go
+
+create unique nonclustered index CategoryDataUniqueness
+on Categories
+(category_name asc)
+go
+
+create unique nonclustered index IngredientsDataUniqueness
+on Ingredients
+(ingredient_name asc)
+go
